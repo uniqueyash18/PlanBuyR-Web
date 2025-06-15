@@ -1,3 +1,59 @@
+@import "tailwindcss/preflight";
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-gray-50 text-gray-900 antialiased dark:bg-[#18181b] dark:text-gray-100;
+  }
+}
+
+@layer components {
+  .container {
+    @apply px-4 mx-auto max-w-7xl sm:px-6 lg:px-8;
+  }
+}
+
+/* Aspect ratio utilities */
+.aspect-w-16 {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+}
+
+.aspect-w-16 > * {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+/* Hide scrollbars */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Import our theme and animations */
+@import './styles/theme.css';
+@import './styles/animations.css';
+
+/* Card and section dark mode */
+.bg-white { @apply dark:bg-gray-900; }
+.bg-gray-50 { @apply dark:bg-[#23232a]; }
+.bg-gray-100 { @apply dark:bg-gray-800; }
+.bg-gray-200 { @apply dark:bg-gray-700; }
+.bg-gray-300 { @apply dark:bg-gray-600; }
+.text-gray-900 { @apply dark:text-gray-100; }
+.text-gray-600 { @apply dark:text-gray-300; }
+.text-gray-400 { @apply dark:text-gray-400; }
+.shadow-lg { @apply dark:shadow-xl; }
+.shadow { @apply dark:shadow-lg; }
+
 @import "tailwindcss";
 
 :root {
