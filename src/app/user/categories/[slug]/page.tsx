@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import React from 'react';
 
 interface CategoryPageProps {
   params: { slug: string };
@@ -15,9 +16,12 @@ const services = [
   { id: 'hulu', name: 'Hulu', image: '/placeholder-hulu.jpg' },
 ];
 
-export default function CategoryPage({ params }: CategoryPageProps) {
+export default function CategoryPage({ params }: any) {
+  const unwrappedParams = React.use(params) as { slug: string };
+  const { slug } = unwrappedParams;
+
   // Convert slug to readable category name
-  const categoryName = params.slug
+  const categoryName = slug
     .replace(/-/g, ' ')
     .replace(/\b\w/g, (c) => c.toUpperCase());
 

@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import React from 'react';
 
 interface PlanPageProps {
   params: { postId: string };
@@ -43,8 +44,9 @@ const serviceData: Record<string, {
   // Add more services as needed
 };
 
-export default function PlanPage({ params }: PlanPageProps) {
-  const { postId } = params;
+export default function PlanPage({ params }: any) {
+  const unwrappedParams = React.use(params) as { postId: string };
+  const { postId } = unwrappedParams;
   const service = serviceData[postId] || {
     name: 'Unknown Service',
     image: '/placeholder-generic.jpg',
