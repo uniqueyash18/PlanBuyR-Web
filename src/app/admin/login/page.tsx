@@ -17,7 +17,7 @@ export default function AdminLoginPage() {
     Error,
     { email: string; password: string }
   >('/api/admin/login', {
-    onSuccess: (result) => {
+    onSuccess: (result:any) => {
       // Save to localStorage
       localStorage.setItem('user', JSON.stringify({...result.data.admin,token : result.data.token}));
       // Redirect to admin dashboard
