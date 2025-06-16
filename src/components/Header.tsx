@@ -3,6 +3,7 @@ import { DarkModeContext } from "@/app/ClientLayout";
 import { removeItem } from "@/hooks/apiService";
 import { clearUser } from "@/redux/slices/userSlice";
 import { RootState } from "@/redux/store";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useContext, useState } from "react";
@@ -46,13 +47,9 @@ export default function Header({ isAdmin = false }: HeaderProps) {
       <div className="container flex items-center h-20 justify-between">
         {/* Logo */}
         <Link href={isAdmin ? "/admin" : "/"} className="flex items-center gap-4 md:gap-6 flex-shrink-0">
-          <span className="inline-block rounded-full bg-gradient-to-tr from-green-400 to-blue-500 p-1 md:p-1.5 shadow-md">
-            {isAdmin ? (
-              <svg width="36" height="36" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="16" fill="#fff" /><path d="M10 22V20C10 17.7909 11.7909 16 14 16H18C20.2091 16 22 17.7909 22 20V22" stroke="#18181b" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /><circle cx="16" cy="12" r="4" stroke="#18181b" strokeWidth="2" /></svg>
-            ) : (
-              <svg width="36" height="36" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="16" fill="#fff" /><path d="M10 22V20C10 17.7909 11.7909 16 14 16H18C20.2091 16 22 17.7909 22 20V22" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /><circle cx="16" cy="12" r="4" stroke="#10b981" strokeWidth="2" /></svg>
-            )}
-          </span>
+          <div className="w-20 h-20 relative">
+            <Image src="/logo.png" alt="PlanB" fill className="object-contain" />
+          </div>
           <span className="font-extrabold text-2xl md:text-3xl tracking-tight leading-tight select-none" style={{ fontFamily: 'Geist, Inter, sans-serif' }}>
             {isAdmin ? (
               <>
