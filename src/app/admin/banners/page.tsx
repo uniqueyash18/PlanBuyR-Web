@@ -1,21 +1,5 @@
 import Link from "next/link";
-import Image from "next/image";
-
-// Placeholder banner data
-const banners = [
-  {
-    id: 1,
-    title: "Summer Sale",
-    image: "/placeholder-banner1.jpg",
-    linkedTo: "Category: OTT Streaming",
-  },
-  {
-    id: 2,
-    title: "New Plan Launch",
-    image: "/placeholder-banner2.jpg",
-    linkedTo: "Plan: Netflix Standard",
-  },
-];
+import BannersTable from "./BannersTable";
 
 export default function BannersPage() {
   return (
@@ -28,37 +12,7 @@ export default function BannersPage() {
           </button>
         </Link>
       </div>
-      <div className="overflow-x-auto bg-white dark:bg-gray-900 rounded-xl shadow-lg">
-        <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-800">
-          <thead className="bg-gray-50 dark:bg-gray-800">
-            <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Title</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Image Preview</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Linked To</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Actions</th>
-            </tr>
-          </thead>
-          <tbody className="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-800">
-            {banners.map((banner) => (
-              <tr key={banner.id}>
-                <td className="px-6 py-4 whitespace-nowrap font-medium text-gray-900 dark:text-gray-100">{banner.title}</td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="w-28 h-16 relative rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700">
-                    <Image src={banner.image} alt={banner.title} fill className="object-cover" />
-                  </div>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-gray-700 dark:text-gray-200">{banner.linkedTo}</td>
-                <td className="px-6 py-4 whitespace-nowrap flex gap-2">
-                  <Link href={`/admin/banners/create?id=${banner.id}`}>
-                    <button className="px-4 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 text-sm">Edit</button>
-                  </Link>
-                  <button className="px-4 py-1 bg-red-500 text-white rounded hover:bg-red-600 text-sm">Delete</button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <BannersTable />
     </main>
   );
 } 

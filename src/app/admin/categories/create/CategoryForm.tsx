@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import usePostData from "@/hooks/usePostData";
 import { useGenericQuery } from "@/hooks/useQuery";
+import { showError, showSuccess } from "@/utils/helperFunctions";
 
 interface Category {
   _id: string;
@@ -34,14 +35,13 @@ export default function CategoryForm() {
   const { mutate: saveCategory, isLoading } = usePostData<Category, Error, FormData>(
     categoryId ? `/api/categories/${categoryId}` : "/api/categories",
     {
-      'Content-Type': 'multipart/form-data'
-    },
-    {
       onSuccess: () => {
-        router.push("/admin/categories");
+        router.push("/admin/categories"); 
+        showSuccess("Category saved successfully");
       },
       onError: (error:any) => {
         console.error("Error saving category:", error);
+        showError("Error saving category");
         // You might want to show an error toast here
       },
     }
