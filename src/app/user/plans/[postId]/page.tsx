@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import React from 'react';
 import { useGenericQuery } from '@/hooks/useQuery';
+import { useSearchParams } from 'next/navigation';
 
 interface Plan {
   _id: string;
@@ -37,9 +38,10 @@ interface PlanPageProps {
   params: { postId: string };
 }
 
-export default function PlanPage({ params }: PlanPageProps) {
+export default function PlanPage() {
   const [currentPage, setCurrentPage] = React.useState(1);
-  const { postId } = params;
+  const searchParams = useSearchParams();
+  const postId = searchParams.get('postId') || '';
 
   // Fetch post and plans data
   const { data: plansData, isLoading } = useGenericQuery<PlansResponse>(

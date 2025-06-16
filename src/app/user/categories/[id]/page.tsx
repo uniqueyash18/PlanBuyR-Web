@@ -2,6 +2,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import React from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useGenericQuery } from '@/hooks/useQuery';
 
 interface Post {
@@ -33,22 +34,22 @@ interface PostsResponse {
   };
 }
 
-interface CategoryPageProps {
-  params: { id: string };
-}
-
-export default function CategoryPage({ params }: CategoryPageProps) {
-  const [currentPage, setCurrentPage] = React.useState(1);
-  const { id } = params;
+export default function CategoryPage() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const page = searchParams.get('page') || '1';
+  const id = searchParams.get('id') || '';
 
   // Fetch posts for the category
   const { data: postsData, isLoading } = useGenericQuery<PostsResponse>(
-    ['category-posts', id, currentPage.toString()],
-    `/api/public/postsbycategory/${id}?page=${currentPage.toString()}&limit=10`,
+    ['category-posts', id, page],
+    `/api/public/postsbycategory/${id}?page=${page}&limit=10`,
   );
 
   const handlePageChange = (newPage: number) => {
-    setCurrentPage(newPage);
+    const params = new URLSearchParams(searchParams.toString());
+    params.set('page', newPage.toString());
+    router.push(`?${params.toString()}`);
   };
 
   if (isLoading) {
@@ -94,7 +95,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
         {postsData?.data.pagination && (
           <div className="flex justify-center items-center space-x-4 mt-8">
             <button
-              onClick={() => handlePageChange(currentPage - 1)}
+              onClick={() => handlePageChange(Number(page) - 1)}
               disabled={!postsData.data.pagination.hasPreviousPage}
               className="px-4 py-2 border rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100"
             >
@@ -102,11 +103,11 @@ export default function CategoryPage({ params }: CategoryPageProps) {
             </button>
             
             <span className="text-gray-600">
-              Page {currentPage} of {postsData.data.pagination.totalPages}
+              Page {page} of {postsData.data.pagination.totalPages}
             </span>
             
             <button
-              onClick={() => handlePageChange(currentPage + 1)}
+              onClick={() => handlePageChange(Number(page) + 1)}
               disabled={!postsData.data.pagination.hasNextPage}
               className="px-4 py-2 border rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100"
             >
