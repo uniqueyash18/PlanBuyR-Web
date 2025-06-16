@@ -4,34 +4,32 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import usePostData from '@/hooks/usePostData';
 import '../../styles/theme.css';
+import { postData } from '@/hooks/apiService';
 
 export default function AdminLoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
 
-  // usePostData for admin login
-  const { mutate: adminLogin, isLoading } = usePostData<
-    { message: string; data: { token: string; admin: any } },
-    Error,
-    { email: string; password: string }
-  >('/api/admin/login', {
-    onSuccess: (result:any) => {
-      // Save to localStorage
-      localStorage.setItem('user', JSON.stringify({...result.data.admin,token : result.data.token}));
-      // Redirect to admin dashboard
-      router.push('/admin');
-    },
-    onError: (err: any) => {
-      setError(err.message || 'Login failed');
-    },
-  });
+  const adminLogin = async (data: any) => {
+    const result = await postData('/api/admin/login', data);
+    return result;
+  }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
-    adminLogin({ email, password });
+    setIsLoading(true);
+    const result = await adminLogin({ email, password });
+    if (result.success) {
+      localStorage.setItem('user', JSON.stringify(result.data));
+      router.push('/admin');
+    } else {
+      setError(result.message);
+    }
+    setIsLoading(false);
   };
 
   return (
@@ -170,12 +168,6 @@ export default function AdminLoginPage() {
                 <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-700">
                   Remember me
                 </label>
-              </div>
-
-              <div className="text-sm">
-                <a href="#" className="font-medium text-gray-900 hover:text-gray-700">
-                  Forgot password?
-                </a>
               </div>
             </div>
 
