@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import React from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams, useParams } from 'next/navigation';
 import { useGenericQuery } from '@/hooks/useQuery';
 
 interface Post {
@@ -37,8 +37,9 @@ interface PostsResponse {
 export default function CategoryPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const params = useParams();
   const page = searchParams.get('page') || '1';
-  const id = searchParams.get('id') || '';
+  const id = params.id as string;
 
   // Fetch posts for the category
   const { data: postsData, isLoading } = useGenericQuery<PostsResponse>(
