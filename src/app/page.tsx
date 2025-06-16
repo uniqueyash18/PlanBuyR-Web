@@ -90,8 +90,8 @@ export default function HomePage() {
   }, []);
   // Auto-advance carousel
   useEffect(() => {
-      if (!homeData?.data?.banners?.data?.length) return;
-    
+    if (!homeData?.data?.banners?.data?.length) return;
+
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % homeData.data.banners.data.length);
     }, 5000);
@@ -124,9 +124,8 @@ export default function HomePage() {
           {homeData?.data?.banners?.data?.map((banner, index) => (
             <div
               key={banner._id}
-              className={`absolute inset-0 transition-opacity duration-1000 ${
-                index === currentSlide ? 'opacity-100' : 'opacity-0'
-              }`}
+              className={`absolute inset-0 transition-opacity duration-1000 ${index === currentSlide ? 'opacity-100' : 'opacity-0'
+                }`}
             >
               <div className="relative h-full w-full">
                 <Image
@@ -165,9 +164,8 @@ export default function HomePage() {
               <button
                 key={index}
                 onClick={() => setCurrentSlide(index)}
-                className={`w-3 h-3 rounded-full transition-colors ${
-                  index === currentSlide ? 'bg-white' : 'bg-white/50'
-                }`}
+                className={`w-3 h-3 rounded-full transition-colors ${index === currentSlide ? 'bg-white' : 'bg-white/50'
+                  }`}
               />
             ))}
           </div>
@@ -185,7 +183,7 @@ export default function HomePage() {
                 {homeData?.data?.categories?.data?.map((category) => (
                   <Link
                     key={category._id}
-                    href={`/user/categories/${category.slug}`}
+                    href={`/user/categories/${category._id}`}
                     className="flex flex-col items-center group focus:outline-none"
                     tabIndex={0}
                   >
@@ -222,7 +220,7 @@ export default function HomePage() {
                   {homeData?.data?.categories?.data?.map((category) => (
                     <Link
                       key={category._id}
-                      href={`/user/categories/${category.slug}`}
+                      href={`/user/categories/${category._id}`}
                       className="flex flex-col items-center group focus:outline-none flex-shrink-0"
                       tabIndex={0}
                       style={{ minWidth: '120px' }}
@@ -284,8 +282,16 @@ export default function HomePage() {
                       <span className="text-2xl font-bold text-gray-900">₹{plan.price}</span>
                       <span className="text-gray-500 ml-1">/{plan.duration}</span>
                     </div>
-                    <button className="w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition-colors">
-                      View Plans
+                    <button
+                      onClick={() => {
+                        window.open(
+                          `https://wa.me/919289781262?text=Hi, I'm interested in the ${plan?.duration} plan for ${plan?.postId?.name} at ₹${plan?.price}. Can you please provide more details?`,
+                          '_blank'
+                        );
+                      }}
+                      className="w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition-colors"
+                    >
+                      Buy Plans
                     </button>
                   </div>
                 </div>
