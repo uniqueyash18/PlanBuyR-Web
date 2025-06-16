@@ -15,10 +15,9 @@ export default function SignupPage() {
         '/api/auth/register',
         {
             onSuccess: (result:any) => {
-                setItem('user', JSON.stringify(result.data));
-                setItem('token', result?.token);
+                setItem('user', JSON.stringify({...result.data,token : result?.token}));
                 // Save to Redux
-                dispatch(setUser(result.data));
+                dispatch(setUser({...result.data,token : result?.token}));
                 router.push('/');
             },
             onError: (error:any) => {

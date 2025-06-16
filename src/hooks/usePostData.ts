@@ -11,11 +11,12 @@ interface UsePostDataOptions<TData, TError, TVariables> {
 
 const usePostData = <TData, TError = Error, TVariables = any>(
   endpoint: string,
+  headers?: any,
   options?: UsePostDataOptions<TData, TError, TVariables>
 ): UseMutationResult<TData, TError, TVariables> & { isLoading: boolean } => {
   const mutation = useMutation<TData, TError, TVariables>({
     mutationFn: async (variables) => {
-      const response = await postData(endpoint, variables);
+      const response = await postData(endpoint, variables,headers);
       return response as TData;
     },
     onSuccess: options?.onSuccess,

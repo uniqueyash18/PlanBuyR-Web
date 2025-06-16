@@ -1,24 +1,75 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import usePostData from "@/hooks/usePostData";
+import { useGenericQuery } from "@/hooks/useQuery";
+
+interface Category {
+  _id: string;
+  name: string;
+  description: string;
+  image?: string;
+}
 
 export default function CategoryForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const categoryId = searchParams.get("id");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState<File | null>(null);
 
+  // Fetch category data if editing
+  const { data: categoryData } = useGenericQuery<{ data: Category }>(
+    ["category", categoryId || ""],
+    categoryId ? `/api/categories/${categoryId}` : "",
+    {},
+    {
+      enabled: !!categoryId,
+    }
+  );
+
+  // Create/Update mutation
+  const { mutate: saveCategory, isLoading } = usePostData<Category, Error, FormData>(
+    categoryId ? `/api/categories/${categoryId}` : "/api/categories",
+    {
+      'Content-Type': 'multipart/form-data'
+    },
+    {
+      onSuccess: () => {
+        router.push("/admin/categories");
+      },
+      onError: (error:any) => {
+        console.error("Error saving category:", error);
+        // You might want to show an error toast here
+      },
+    }
+  );
+
+  // Populate form if editing
+  useEffect(() => {
+    if (categoryData?.data) {
+      setName(categoryData.data.name);
+      setDescription(categoryData.data.description);
+    }
+  }, [categoryData]);
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle save logic
-    router.push("/admin/categories");
+    
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("description", description);
+    if (image) {
+      formData.append("image", image);
+    }
+
+    saveCategory(formData);
   };
 
   return (
     <>
-      <h1 className="text-2xl font-bold mb-8">{searchParams.get("id") ? "Edit Category" : "Add New Category"}</h1>
+      <h1 className="text-2xl font-bold mb-8">{categoryId ? "Edit Category" : "Add New Category"}</h1>
       <form className="space-y-6 bg-white dark:bg-gray-900 p-8 rounded-xl shadow-lg" onSubmit={handleSubmit}>
         <div>
           <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-200">Name</label>
@@ -59,9 +110,10 @@ export default function CategoryForm() {
           </button>
           <button
             type="submit"
-            className="px-6 py-2 rounded-lg bg-indigo-600 text-white font-semibold hover:bg-indigo-700 transition-colors"
+            disabled={isLoading}
+            className="px-6 py-2 rounded-lg bg-indigo-600 text-white font-semibold hover:bg-indigo-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Save
+            {isLoading ? "Saving..." : "Save"}
           </button>
         </div>
       </form>

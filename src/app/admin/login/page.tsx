@@ -19,8 +19,7 @@ export default function AdminLoginPage() {
   >('/api/admin/login', {
     onSuccess: (result) => {
       // Save to localStorage
-      localStorage.setItem('admin', JSON.stringify(result.data.admin));
-      localStorage.setItem('admin_token', result.data.token);
+      localStorage.setItem('user', JSON.stringify({...result.data.admin,token : result.data.token}));
       // Redirect to admin dashboard
       router.push('/admin');
     },

@@ -23,10 +23,9 @@ export default function LoginPage() {
   >('/api/auth/login', {
     onSuccess: (result:any) => {
       // Save to localStorage
-      setItem('user', JSON.stringify(result.data));
-      setItem('token', result?.token);
+      setItem('user', JSON.stringify({...result.data,token :result?.token}));
       // Save to Redux
-      dispatch(setUser(result.data));
+      dispatch(setUser({...result.data,token :result?.token}));
       // Redirect
       router.push('/');
     },

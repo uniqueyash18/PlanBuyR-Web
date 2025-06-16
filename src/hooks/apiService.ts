@@ -3,7 +3,7 @@
 import axios from 'axios';
 
 // API base URL
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://www.buyrapp.in';
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
 // Create axios instance
 const api = axios.create({
@@ -16,11 +16,11 @@ const api = axios.create({
 // Request interceptor
 api.interceptors.request.use(
   (config) => {
-    const userData = localStorage.getItem('userData');
+    const userData = localStorage.getItem('user');
     if (userData) {
-      const token  = JSON.parse(userData);
-      if (token?.user?.token) {
-        config.headers.Authorization = `Bearer ${token?.user?.token}`;
+      const user  = JSON.parse(userData);
+      if (user?.token) {
+        config.headers.Authorization = `Bearer ${user?.token}`;
       }
     }
     return config;
@@ -55,6 +55,22 @@ export const postData = async (endpoint: string, data: any, headers?: any) => {
 export const getData = async (endpoint: string, params?: any) => {
   try {
     const response = await api.get(endpoint, { params });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+export const deleteData = async (endpoint: string, data?: any) => {
+  try {
+    const response = await api.delete(endpoint, { data });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+export const putData = async (endpoint: string, data: any, params?: any) => {
+  try {
+    const response = await api.put(endpoint, data, { params });
     return response.data;
   } catch (error) {
     throw error;
