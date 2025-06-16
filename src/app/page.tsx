@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import requestNotificationPermission from '@/utils/firebase';
 import { useGenericQuery } from '@/hooks/useQuery';
+import GoogleAd from '@/components/GoogleAd';
 
 interface Banner {
   _id: string;
@@ -172,6 +173,15 @@ export default function HomePage() {
         </section>
       )}
 
+      {/* Top Ad */}
+      <div className="w-full px-4 py-6">
+        <GoogleAd 
+          slot="YOUR_TOP_AD_SLOT_ID"
+          style={{ margin: '0 auto', maxWidth: '728px' }}
+          format="auto"
+        />
+      </div>
+
       {/* Subscription Categories Section */}
       {homeData?.data?.categories?.data?.length && (
         <section className="py-16 px-4 sm:px-6 lg:px-8 lg:bg-gray-50 dark:bg-black ">
@@ -257,6 +267,15 @@ export default function HomePage() {
         </section>
       )}
 
+      {/* Middle Ad */}
+      <div className="w-full px-4 py-6">
+        <GoogleAd 
+          slot="YOUR_MIDDLE_AD_SLOT_ID"
+          style={{ margin: '0 auto', maxWidth: '728px' }}
+          format="auto"
+        />
+      </div>
+
       {/* Featured Plans Section */}
       {homeData?.data?.latestPlans?.data?.length && (
         <section className="py-16 px-4 sm:px-6 lg:px-8">
@@ -300,6 +319,15 @@ export default function HomePage() {
           </div>
         </section>
       )}
+
+      {/* Bottom Ad */}
+      <div className="w-full px-4 py-6">
+        <GoogleAd 
+          slot="YOUR_BOTTOM_AD_SLOT_ID"
+          style={{ margin: '0 auto', maxWidth: '728px' }}
+          format="auto"
+        />
+      </div>
     </main>
   );
 }

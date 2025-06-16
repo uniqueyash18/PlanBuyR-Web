@@ -4,6 +4,7 @@ import Image from 'next/image';
 import React from 'react';
 import { useGenericQuery } from '@/hooks/useQuery';
 import { useParams, useSearchParams } from 'next/navigation';
+import GoogleAd from '@/components/GoogleAd';
 
 interface Plan {
   _id: string;
@@ -91,6 +92,16 @@ export default function PlanPage() {
           <h1 className="text-4xl font-bold mb-2 text-center">{post?.name}</h1>
           <p className="text-gray-600 text-center max-w-xl">{post?.description}</p>
         </div>
+
+        {/* Top Ad */}
+        <div className="mb-8">
+          <GoogleAd 
+            slot="YOUR_PLANS_TOP_AD_SLOT_ID"
+            style={{ margin: '0 auto', maxWidth: '728px' }}
+            format="auto"
+          />
+        </div>
+
         <div>
           <h2 className="text-2xl font-semibold mb-6 text-center">Available Plans</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -124,6 +135,15 @@ export default function PlanPage() {
             ) : (
               <div className="col-span-full text-center text-gray-400">No plans available.</div>
             )}
+          </div>
+
+          {/* Bottom Ad */}
+          <div className="mt-8 mb-8">
+            <GoogleAd 
+              slot="YOUR_PLANS_BOTTOM_AD_SLOT_ID"
+              style={{ margin: '0 auto', maxWidth: '728px' }}
+              format="auto"
+            />
           </div>
 
           {/* Pagination */}

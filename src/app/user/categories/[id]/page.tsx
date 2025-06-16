@@ -4,6 +4,7 @@ import Image from 'next/image';
 import React from 'react';
 import { useRouter, useSearchParams, useParams } from 'next/navigation';
 import { useGenericQuery } from '@/hooks/useQuery';
+import GoogleAd from '@/components/GoogleAd';
 
 interface Post {
   _id: string;
@@ -68,6 +69,15 @@ export default function CategoryPage() {
       <div className="max-w-5xl mx-auto">
         <h1 className="text-4xl font-bold mb-10 text-center">{postsData?.data.posts[0]?.categoryId?.name || 'Category'}</h1>
         
+        {/* Top Ad */}
+        <div className="mb-8">
+          <GoogleAd 
+            slot="YOUR_CATEGORY_TOP_AD_SLOT_ID"
+            style={{ margin: '0 auto', maxWidth: '728px' }}
+            format="auto"
+          />
+        </div>
+
         {/* Posts Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mb-8">
           {postsData?.data.posts.map((post) => (
@@ -90,6 +100,15 @@ export default function CategoryPage() {
               </div>
             </Link>
           ))}
+        </div>
+
+        {/* Bottom Ad */}
+        <div className="mb-8">
+          <GoogleAd 
+            slot="YOUR_CATEGORY_BOTTOM_AD_SLOT_ID"
+            style={{ margin: '0 auto', maxWidth: '728px' }}
+            format="auto"
+          />
         </div>
 
         {/* Pagination */}
