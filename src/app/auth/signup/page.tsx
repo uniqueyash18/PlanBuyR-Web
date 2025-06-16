@@ -104,8 +104,8 @@ export default function SignupPage() {
             <div className="w-full lg:w-1/2 flex items-center justify-center px-4 sm:px-6 lg:px-8">
                 <div className="max-w-md w-full space-y-8">
                     <div className="text-center">
-                        <h2 className="text-3xl font-bold text-gray-900">Create your account</h2>
-                        <p className="mt-2 text-sm text-gray-600">
+                        <h2 className="text-3xl font-bold text-black">Create your account</h2>
+                        <p className="mt-2 text-sm text-black">
                             Already have an account?{' '}
                             <a href="/auth/login" className="font-medium text-indigo-600 hover:text-indigo-500">
                                 Sign in
@@ -138,7 +138,7 @@ export default function SignupPage() {
                                         required
                                         value={formData.username}
                                         onChange={handleChange}
-                                        className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                        className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-black"
                                         placeholder="Choose a username"
                                     />
                                 </div>
@@ -162,7 +162,7 @@ export default function SignupPage() {
                                         required
                                         value={formData.email}
                                         onChange={handleChange}
-                                        className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                        className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-black"
                                         placeholder="Enter your email"
                                     />
                                 </div>
@@ -186,7 +186,7 @@ export default function SignupPage() {
                                         required
                                         value={formData.password}
                                         onChange={handleChange}
-                                        className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                        className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-black"
                                         placeholder="Create a password"
                                     />
                                 </div>
@@ -210,7 +210,7 @@ export default function SignupPage() {
                                         required
                                         value={formData.confirmPassword}
                                         onChange={handleChange}
-                                        className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                        className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-black"
                                         placeholder="Confirm your password"
                                     />
                                 </div>
