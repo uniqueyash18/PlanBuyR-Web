@@ -11,6 +11,7 @@ interface Plan {
   postId: string;
   duration: string;
   price: number;
+  comparePrice: number;
   features: string[];
 }
 
@@ -32,6 +33,7 @@ export default function PlanForm() {
   const [postId, setPostId] = useState("");
   const [duration, setDuration] = useState("");
   const [price, setPrice] = useState("");
+  const [comparePrice, setComparePrice] = useState("");
   const [features, setFeatures] = useState<string[]>([""]);
 
   // Fetch plan data if editing
@@ -71,6 +73,7 @@ export default function PlanForm() {
       setPostId(planData.data.postId);
       setDuration(planData.data.duration);
       setPrice(planData.data.price.toString());
+      setComparePrice(planData.data.comparePrice?.toString() || "");
       setFeatures(planData.data.features);
     }
   }, [planData]);
@@ -97,6 +100,7 @@ export default function PlanForm() {
       postId,
       duration,
       price: price,
+      comparePrice: comparePrice,
       features: features.filter(feature => feature.trim() !== "")
     };
 
@@ -142,6 +146,16 @@ export default function PlanForm() {
             value={price}
             onChange={(e) => setPrice(e.target.value)}
             required
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-200">Compare Price (₹)</label>
+          <input
+            type="number"
+            className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+            value={comparePrice}
+            onChange={(e) => setComparePrice(e.target.value)}
+            placeholder="Original price before discount"
           />
         </div>
         <div>

@@ -48,6 +48,7 @@ interface Plan {
   };
   duration: string;
   price: number;
+  comparePrice: number;
   features: string[];
   createdAt: string;
   updatedAt: string;
@@ -262,26 +263,34 @@ export default function HomePage() {
         <section className="py-16 px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-7xl">
             <h2 className="text-3xl font-bold text-center mb-12">Featured Plans</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-8">
               {homeData?.data?.latestPlans?.data?.map((plan) => (
                 <div
                   key={plan._id}
-                  className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow"
+                  className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow border border-gray-500 relative"
                 >
-                  <div className="relative h-48">
+                  {plan.comparePrice && (
+                    <div className="absolute z-10 top-2 right-2 bg-gradient-to-r from-yellow-400 to-yellow-600 text-white text-xs font-bold px-2 py-1 rounded-full shadow-md">
+                      {Math.round(((plan.comparePrice - plan.price) / plan.comparePrice) * 100)}% OFF
+                    </div>
+                  )}
+                  <div className="relative h-32">
                     <Image
-                      src={plan.postId.logoUrl}
+                      src={plan.postId.logoUrl || '/default-product-image.png'}
                       alt={plan.postId.name}
                       fill
-                      className="object-stretch"
+                      className="object-stretch p-2"
                     />
                   </div>
-                  <div className="p-6">
-                    <h3 className="text-xl font-semibold mb-2">{plan.postId.name}</h3>
-                    <div className="flex items-baseline mb-6">
-                      <span className="text-2xl font-bold text-gray-900">₹{plan.price}</span>
-                      <span className="text-gray-500 ml-1">/{plan.duration}</span>
+                  <div className="p-4">
+                    <h3 className="text-lg font-semibold mb-1 line-clamp-1">{plan.postId.name}</h3>
+                    <div className="flex items-baseline mb-1">
+                      <span className="text-xl font-bold text-indigo-600">₹{plan.price}</span>
+                      {plan.comparePrice && (
+                        <span className="text-sm text-gray-500 line-through ml-2">₹{plan.comparePrice}</span>
+                      )}
                     </div>
+                    <div className="text-sm text-gray-500 mb-4">{plan.duration}</div>
                     <button
                       onClick={() => {
                         window.open(
@@ -289,9 +298,9 @@ export default function HomePage() {
                           '_blank'
                         );
                       }}
-                      className="w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition-colors"
+                      className="w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition-colors text-sm font-medium"
                     >
-                      Buy Plans
+                      Buy Now
                     </button>
                   </div>
                 </div>

@@ -78,10 +78,10 @@ export default function CategoryPage() {
             >
               <div className="relative h-48 w-full">
                 <Image
-                  src={post.logoUrl || '/placeholder-image.jpg'}
+                  src={post.logoUrl || '/default-product-image.png'}
                   alt={post.name}
                   fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-300"
+                  className="object-stretch group-hover:scale-105 transition-transform duration-300"
                 />
               </div>
               <div className="p-5">

@@ -8,6 +8,7 @@ import { useParams, useSearchParams } from 'next/navigation';
 interface Plan {
   _id: string;
   price: number;
+  comparePrice: number;
   duration: string;
   features: string[];
   postId: {
@@ -81,11 +82,11 @@ export default function PlanPage() {
         <div className="flex flex-col items-center mb-8">
           <div className="w-32 h-32 rounded-full overflow-hidden shadow-lg mb-4 bg-gray-100">
             <Image
-              src={post?.logoUrl || '/placeholder-generic.jpg'}
+              src={post?.logoUrl || '/default-product-image.png'}
               alt={post?.name}
               width={128}
               height={128}
-              className="object-cover w-full h-full"
+              className="object-stretch w-full h-full"
             />
           </div>
           <h1 className="text-4xl font-bold mb-2 text-center">{post?.name}</h1>
@@ -96,9 +97,19 @@ export default function PlanPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {plansData?.data.plans.length > 0 ? (
               plansData.data.plans.map((plan) => (
-                <div key={plan?._id} className="bg-gray-50 rounded-lg shadow p-6 flex flex-col items-center">
+                <div key={plan?._id} className="bg-gray-50 rounded-lg shadow p-6 flex flex-col items-center relative overflow-hidden">
+                  {plan?.comparePrice && (
+                    <div className="absolute top-3 right-3 bg-gradient-to-r from-yellow-400 to-yellow-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md z-10">
+                      {Math.round(((plan?.comparePrice - plan?.price) / plan?.comparePrice) * 100)}% OFF
+                    </div>
+                  )}
                   <div className="text-lg font-semibold mb-2">{plan?.duration}</div>
-                  <div className="text-2xl font-bold text-indigo-600 mb-4">₹{plan?.price}</div>
+                  <div className="flex items-baseline mb-1">
+                    <span className="text-2xl font-bold text-indigo-600">₹{plan?.price}</span>
+                    {plan?.comparePrice && (
+                      <span className="text-sm text-gray-500 line-through ml-2">₹{plan?.comparePrice}</span>
+                    )}
+                  </div>
                   {plan?.features && plan?.features?.length > 0 && (
                     <ul className="text-gray-600 mb-4 space-y-2">
                       {plan?.features?.map((feature, idx) => (

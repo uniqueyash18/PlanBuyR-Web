@@ -10,6 +10,7 @@ interface Plan {
   _id: string;
   duration: string;
   price: number;
+  comparePrice: number;
   features: string[];
   postId: {
     _id: string;
@@ -66,6 +67,7 @@ export default function PlansTable() {
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Service Name</th>
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Duration</th>
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Price</th>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Compare Price</th>
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Features</th>
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Actions</th>
           </tr>
@@ -81,6 +83,9 @@ export default function PlansTable() {
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-gray-700 dark:text-gray-200">
                 ₹{plan.price}
+              </td>
+              <td className="px-6 py-4 whitespace-nowrap text-gray-700 dark:text-gray-200">
+                ₹{plan.comparePrice}
               </td>
               <td className="px-6 py-4 text-gray-700 dark:text-gray-200">
                 <div className="max-w-[300px]">
