@@ -1,7 +1,9 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 
 // Placeholder AuthContext
 const AuthContext = React.createContext({
@@ -19,6 +21,17 @@ const navLinks = [
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const pathname = usePathname();
+  const user = useSelector((state: RootState) => state.user.currentUser);
+  const router = useRouter();
+  
+  useEffect(() => {
+    if (!user?.token) {
+      router.push("/admin/login");
+    }else if (user?.role !== "admin") {
+      router.push("/");
+    }
+  }, [user, router]);
+
 
   // Hide sidebar and header on /admin/login
   if (pathname === "/admin/login") {
@@ -35,7 +48,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             onClick={() => setSidebarOpen(true)}
             aria-label="Open sidebar"
           >
-            <svg width="28" height="28" fill="none" viewBox="0 0 24 24"><path stroke="#18181b" className="dark:stroke-gray-100" strokeWidth="2" strokeLinecap="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+            <svg width="28" height="28" fill="none" viewBox="0 0 24 24"><path stroke="#18181b" className="dark:stroke-gray-100" strokeWidth="2" strokeLinecap="round" d="M4 6h16M4 12h16M4 18h16" /></svg>
           </button>
           <span className="font-bold text-lg tracking-tight text-gray-900 dark:text-gray-100">PlanB Admin</span>
         </div>
@@ -44,7 +57,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       <aside className="hidden md:flex flex-col w-64 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 p-6 space-y-6 fixed inset-y-0 left-0 z-30">
         <div className="flex items-center gap-2 mb-8">
           <span className="inline-block rounded-full bg-gradient-to-tr from-green-400 to-blue-500 p-1">
-            <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="16" fill="#fff"/><path d="M10 22V20C10 17.7909 11.7909 16 14 16H18C20.2091 16 22 17.7909 22 20V22" stroke="#18181b" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/><circle cx="16" cy="12" r="4" stroke="#18181b" strokeWidth="2"/></svg>
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="16" fill="#fff" /><path d="M10 22V20C10 17.7909 11.7909 16 14 16H18C20.2091 16 22 17.7909 22 20V22" stroke="#18181b" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /><circle cx="16" cy="12" r="4" stroke="#18181b" strokeWidth="2" /></svg>
           </span>
           <span className="font-bold text-xl tracking-tight text-gray-900 dark:text-gray-100">PlanB Admin</span>
         </div>
@@ -66,7 +79,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           <div className="w-64 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 p-6 space-y-6 flex flex-col h-full animate-slide-in-left">
             <div className="flex items-center gap-2 mb-8">
               <span className="inline-block rounded-full bg-gradient-to-tr from-green-400 to-blue-500 p-1">
-                <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="16" fill="#fff"/><path d="M10 22V20C10 17.7909 11.7909 16 14 16H18C20.2091 16 22 17.7909 22 20V22" stroke="#18181b" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/><circle cx="16" cy="12" r="4" stroke="#18181b" strokeWidth="2"/></svg>
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="16" fill="#fff" /><path d="M10 22V20C10 17.7909 11.7909 16 14 16H18C20.2091 16 22 17.7909 22 20V22" stroke="#18181b" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /><circle cx="16" cy="12" r="4" stroke="#18181b" strokeWidth="2" /></svg>
               </span>
               <span className="font-bold text-xl tracking-tight text-gray-900 dark:text-gray-100">PlanB Admin</span>
             </div>

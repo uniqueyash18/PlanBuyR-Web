@@ -1,3 +1,4 @@
+import { getItem } from '@/hooks/apiService';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface User {
@@ -6,6 +7,7 @@ interface User {
   username: string | null;
   photoURL: string | null;
   role: string | null;
+  token: string | null;
 }
 
 interface UserState {
@@ -15,7 +17,7 @@ interface UserState {
 }
 
 const initialState: UserState = {
-  currentUser: null,
+  currentUser: getItem('user') || null,
   loading: false,
   error: null,
 };

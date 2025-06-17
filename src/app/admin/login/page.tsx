@@ -24,7 +24,7 @@ export default function AdminLoginPage() {
     setIsLoading(true);
     const result = await adminLogin({ email, password });
     if (result.success) {
-      localStorage.setItem('user', JSON.stringify(result.data));
+      localStorage.setItem('user', JSON.stringify({token: result.data.token, ...result.data.admin}));
       router.push('/admin');
     } else {
       setError(result.message);

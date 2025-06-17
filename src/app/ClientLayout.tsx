@@ -9,7 +9,7 @@ import { RootState } from "@/redux/store";
 
 export const DarkModeContext = createContext({
   dark: false,
-  toggle: () => {},
+  toggle: () => { },
 });
 
 export default function ClientLayout({ children }: { children: React.ReactNode }) {
@@ -40,7 +40,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
   }, []);
   const toggle = () => setDark((d) => !d);
 
-  const isAdmin = pathname.startsWith("/admin") || pathname.startsWith("/auth") || user?.role === "admin";
+  const isAdmin = pathname.includes("/admin") || pathname.startsWith("/auth") || user?.role === "admin";
 
   return (
     <DarkModeContext.Provider value={{ dark, toggle }}>
