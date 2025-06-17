@@ -67,7 +67,7 @@ export default function Header({ isAdmin = false }: HeaderProps) {
         <nav className="hidden md:flex items-center gap-8 ml-auto">
           {user ? (
             <>
-              {links.map((link) => (
+              {/* {links.map((link) => (
                 <Link
                   key={link.name}
                   href={link.href}
@@ -75,7 +75,7 @@ export default function Header({ isAdmin = false }: HeaderProps) {
                 >
                   {link.name}
                 </Link>
-              ))}
+              ))} */}
               <button
                 onClick={handleLogout}
                 className="ml-4 text-white hover:text-red-600 font-medium text-lg px-2 py-1 rounded transition"
@@ -122,7 +122,7 @@ export default function Header({ isAdmin = false }: HeaderProps) {
           <div className="flex flex-col gap-4 mt-2">
             {user ? (
               <>
-                {links.map((link) => (
+                {/* {links.map((link) => (
                   <Link
                     key={link.name}
                     href={link.href}
@@ -131,7 +131,7 @@ export default function Header({ isAdmin = false }: HeaderProps) {
                   >
                     {link.name}
                   </Link>
-                ))}
+                ))} */}
                 <button
                   onClick={() => {
                     setMenuOpen(false);
