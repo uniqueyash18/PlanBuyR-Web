@@ -1,12 +1,6 @@
 import Link from "next/link";
 import PlansTable from "./PlansTable";
 
-// Placeholder plan data
-const plans = [
-  { id: 1, service: "Netflix", duration: "1 Month", price: "₹499" },
-  { id: 2, service: "Netflix", duration: "12 Months", price: "₹5999" },
-  { id: 3, service: "SonyLiv", duration: "3 Months", price: "₹749" },
-];
 
 export default function PlansPage() {
   return (
