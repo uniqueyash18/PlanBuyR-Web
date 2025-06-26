@@ -128,7 +128,7 @@ export default function PlanPage() {
                     rel="noopener noreferrer"
                     className="mt-auto bg-indigo-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-indigo-700 transition-colors w-full text-center"
                   >
-                    Select Plan
+                    {plan?.duration.toLowerCase().includes('month') || plan?.duration.toLowerCase().includes('year') ? 'Select Plan' : 'Buy Now'}
                   </a>
                 </div>
               ))
@@ -139,8 +139,7 @@ export default function PlanPage() {
 
           {/* Pagination */}
           {plansData?.data.pagination &&
-            plansData?.data.pagination?.totalPages > 1 &&
-            currentPage < plansData?.data.pagination?.totalPages && (
+            plansData?.data.pagination?.totalPages > 1 && (
               <div className="flex justify-center items-center space-x-4 mt-8">
                 <button
                   onClick={() => handlePageChange(currentPage - 1)}
